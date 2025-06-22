@@ -1,8 +1,38 @@
 package com.AtpTournament.TennisAtpTournament.controller;
 
 
-import org.springframework.web.bind.annotation.RestController;
+import com.AtpTournament.TennisAtpTournament.entityDto.TournamentDto;
+import com.AtpTournament.TennisAtpTournament.request.TournamentRequest;
+import com.AtpTournament.TennisAtpTournament.service.TournamentService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
+@RequestMapping("/tournament")
 public class TournamentRestController {
+
+    @Autowired
+    private TournamentService tournamentService;
+
+    @PostMapping("/create")
+    public long createTournamentService(@RequestBody TournamentRequest tournamentRequest) {
+        return tournamentService.createTournament(tournamentRequest);
+    }
+
+    @GetMapping("/findBy/{id}")
+    public TournamentDto getTournament(@RequestParam Long id) {
+        return tournamentService.getTournament(id);
+    }
+
+    @DeleteMapping("/deleteBy/{id}")
+    public void deleteTournament(@PathVariable Long id) {
+        tournamentService.DeleteTournament(id);
+    }
+
+    @PostMapping("/updateBy/{id}")
+    public TournamentDto updateTournament(@PathVariable Long id, @RequestBody TournamentRequest tournamentRequest) {
+        return tournamentService.updateTournament(id, tournamentRequest);
+    }
+
+
 }
