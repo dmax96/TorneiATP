@@ -4,27 +4,27 @@ import com.AtpTournament.TennisAtpTournament.entity.Player;
 import com.AtpTournament.TennisAtpTournament.entity.Tournament;
 import jakarta.persistence.*;
 
-import java.util.Date;
+import java.time.LocalDateTime;
+
 
 public class MatchDto {
     private int id;
     private Tournament tournament;
     private Player player1;
     private Player player2;
-
-    private Date match_date = null;
+    private LocalDateTime matchDate;
 
 
     public MatchDto(){
 
     }
 
-    public MatchDto(int id, Tournament tournament, Player player1, Player player2, Date match_date) {
+    public MatchDto(int id, Tournament tournament, Player player1, Player player2, LocalDateTime matchDate) {
         this.id = id;
         this.tournament = tournament;
         this.player1 = player1;
         this.player2 = player2;
-        this.match_date = match_date;
+        this.matchDate = matchDate;
     }
 
     public int getId() {
@@ -59,11 +59,11 @@ public class MatchDto {
         this.player2 = player2;
     }
 
-    public Date getMatch_date() {
-        return match_date;
+    public LocalDateTime getMatchDate() {
+        return matchDate;
     }
 
-    public void setMatch_date(Date match_date) {
-        this.match_date = match_date;
+    public void setMatchDate(LocalDateTime matchDate) {
+        this.matchDate = matchDate;
     }
 }

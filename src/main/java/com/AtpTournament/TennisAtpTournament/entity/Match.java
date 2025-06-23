@@ -1,8 +1,7 @@
 package com.AtpTournament.TennisAtpTournament.entity;
 
 import jakarta.persistence.*;
-import lombok.Builder;
-import org.springframework.boot.context.properties.bind.DefaultValue;
+import org.hibernate.annotations.CreationTimestamp;
 
 import java.time.LocalDateTime;
 import java.util.Date;
@@ -11,7 +10,7 @@ import java.util.Date;
 public class Match extends BaseEntity {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
 
     @ManyToOne
@@ -19,25 +18,27 @@ public class Match extends BaseEntity {
     private Tournament tournament;
 
     @ManyToOne
-    @JoinColumn(name = "id_player")
+    @JoinColumn(name = "id_first_player")
     private Player player1;
 
     @ManyToOne
-    @JoinColumn(name = "id_player2")
+    @JoinColumn(name = "id_second_player")
     private Player player2;
 
-    private Date match_date = null;
+    @CreationTimestamp
+    @Column(name = "match_date")
+    private LocalDateTime matchDate;
 
 
     public Match(){
 
     }
 
-    public Match(Tournament tournament, Player player1, Player player2, Date match_date) {
+    public Match(Tournament tournament, Player player1, Player player2, LocalDateTime matchDate) {
         this.tournament = tournament;
         this.player1 = player1;
         this.player2 = player2;
-        this.match_date = match_date;
+        this.matchDate = matchDate;
     }
 
     public long getId() {
@@ -72,11 +73,11 @@ public class Match extends BaseEntity {
         this.player2 = player2;
     }
 
-    public Date getMatch_date() {
-        return match_date;
+    public LocalDateTime getMatchDate() {
+        return matchDate;
     }
 
-    public void setMatch_date(Date match_date) {
-        this.match_date = match_date;
+    public void setMatchDate(LocalDateTime matchDate) {
+        this.matchDate = matchDate;
     }
 }
