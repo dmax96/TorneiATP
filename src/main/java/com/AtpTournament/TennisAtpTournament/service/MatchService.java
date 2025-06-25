@@ -5,6 +5,9 @@ import com.AtpTournament.TennisAtpTournament.entity.Match;
 import com.AtpTournament.TennisAtpTournament.entity.Player;
 import com.AtpTournament.TennisAtpTournament.entity.Tournament;
 import com.AtpTournament.TennisAtpTournament.entityDto.MatchDto;
+import com.AtpTournament.TennisAtpTournament.exception.InvalidPlayerException;
+import com.AtpTournament.TennisAtpTournament.exception.InvalidTournamentException;
+import com.AtpTournament.TennisAtpTournament.exception.MatchNotFoundException;
 import com.AtpTournament.TennisAtpTournament.mapper.MatchMapper;
 import com.AtpTournament.TennisAtpTournament.repository.MatchRepository;
 import com.AtpTournament.TennisAtpTournament.repository.PlayerRepository;
@@ -32,28 +35,44 @@ public class MatchService {
 
 
     public Long CreateMatch(MatchRequest matchRequest) {
-        Player playerOne = playerRepository.findById(matchRequest.getIdPlayerOne()).get();
-        Tournament tournament = tournamentRepository.findById(matchRequest.getIdTournament()).get();
-        Player playerTwo = playerRepository.findById(matchRequest.getIdPlayerTwo()).get();
+        log.info("Creating a match...");
+        log.info("searching player one...");
+        Player playerOne = playerRepository.findById(matchRequest.getIdPlayerOne()).
+                orElseThrow(() -> new InvalidPlayerException("Player 1 not found with id " + matchRequest.getIdPlayerOne()));
+        log.info("searching tournament...");
+        Tournament tournament = tournamentRepository.findById(matchRequest.getIdTournament()).
+                orElseThrow(() -> new InvalidTournamentException(("Tournament not found with id " + matchRequest.getIdTournament())));
+        Player playerTwo = playerRepository.findById(matchRequest.getIdPlayerTwo()).
+                orElseThrow(() -> new InvalidPlayerException("Player 2 not found with id " + matchRequest.getIdPlayerTwo()));
+        if(playerOne == playerTwo) {
+            throw new InvalidPlayerException("Player 1 is the same as the player 2");
+        }
 
+        log.info("All credetial valid!");
         Match match = new Match();
         match.setTournament(tournament);
         match.setPlayer1(playerOne);
         match.setPlayer2(playerTwo);
 
         matchRepository.save(match);
+        log.info("Match created!");
         return match.getId();
     }
 
     public MatchDto GetMatch(Long id) {
-        Match match = matchRepository.findById(id).get();
-
+        log.info("Getting a match...");
+        Match match = matchRepository.findById(id).
+                orElseThrow(() -> new MatchNotFoundException(id));
+        log.info("match found!");
         return matchMapper.matchToMatchDto(match);
     }
 
 
     public void DeleteMatch(Long id) {
-        Match match = matchRepository.findById(id).get();
+        log.info("Deleting match...");
+        Match match = matchRepository.findById(id).
+                orElseThrow(() -> new MatchNotFoundException(id));
+        log.info("match deleted!");
         matchRepository.delete(match);
     }
 

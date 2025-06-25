@@ -25,6 +25,14 @@ public class GlobalExceptionHandler extends RuntimeException {
         log.error(e.getMessage());
     }
 
+    @ExceptionHandler(InvalidPlayerException.class)
+    public void HandleInvalidPlayerException(InvalidPlayerException e) {
+        log.error(e.getMessage());
+    }
 
+    @ExceptionHandler
+    public void HandleInvalidTournamentException(InvalidTournamentException e) {
+        log.error(e.getMessage());
+    }
 
 }

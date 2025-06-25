@@ -2,6 +2,6 @@ package com.AtpTournament.TennisAtpTournament.exception;
 
 public class PlayerNotFoundException extends RuntimeException {
     public PlayerNotFoundException(Long id) {
-        super("Tournament with id " +  id  + " not found");
+        super("Player with id " +  id  + " not found");
     }
 }

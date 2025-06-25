@@ -2,6 +2,7 @@ package com.AtpTournament.TennisAtpTournament.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotBlank;
 import lombok.Getter;
 import lombok.Setter;
 import org.antlr.v4.runtime.misc.NotNull;
@@ -20,8 +21,10 @@ public class Tournament extends BaseEntity {
     private long id;
 
     @NotNull
+    @NotBlank
     private String name;
     @NotNull
+    @NotBlank
     private String location;
 
     @OneToMany(mappedBy = "tournament", cascade = CascadeType.ALL, orphanRemoval = true)

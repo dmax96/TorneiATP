@@ -4,6 +4,7 @@ package com.AtpTournament.TennisAtpTournament.controller;
 import com.AtpTournament.TennisAtpTournament.entityDto.TournamentDto;
 import com.AtpTournament.TennisAtpTournament.request.TournamentRequest;
 import com.AtpTournament.TennisAtpTournament.service.TournamentService;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -17,7 +18,7 @@ public class TournamentRestController {
     private TournamentService tournamentService;
 
     @PostMapping("/create")
-    public long createTournamentService(@RequestBody TournamentRequest tournamentRequest) {
+    public long createTournamentService(@RequestBody @Valid TournamentRequest tournamentRequest) {
         return tournamentService.createTournament(tournamentRequest);
     }
 
@@ -32,7 +33,7 @@ public class TournamentRestController {
     }
 
     @PostMapping("/updateBy/{id}")
-    public TournamentDto updateTournament(@PathVariable Long id, @RequestBody TournamentRequest tournamentRequest) {
+    public TournamentDto updateTournament(@PathVariable Long id, @RequestBody @Valid TournamentRequest tournamentRequest) {
         return tournamentService.updateTournament(id, tournamentRequest);
     }
 
