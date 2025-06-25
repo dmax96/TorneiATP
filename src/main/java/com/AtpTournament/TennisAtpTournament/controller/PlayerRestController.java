@@ -50,4 +50,9 @@ public class PlayerRestController {
         return playerService.UpdatePlayer(id, playerRequest);
     }
 
+    @GetMapping("/SortByAtp")
+    public List<PlayerDto> SortByAtp() {
+        return playerService.getPlayerRanking();
+    }
+
 }

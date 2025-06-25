@@ -7,6 +7,8 @@ import com.AtpTournament.TennisAtpTournament.service.TournamentService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RestController
 @RequestMapping("/tournament")
 public class TournamentRestController {
@@ -34,5 +36,9 @@ public class TournamentRestController {
         return tournamentService.updateTournament(id, tournamentRequest);
     }
 
+    @GetMapping("/search")
+    public List<TournamentDto> searchByLocation(@RequestParam String location) {
+        return tournamentService.searchByLocation(location);
+    }
 
 }

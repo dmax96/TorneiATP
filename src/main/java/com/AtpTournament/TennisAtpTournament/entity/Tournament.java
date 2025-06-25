@@ -1,13 +1,17 @@
 package com.AtpTournament.TennisAtpTournament.entity;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
+import lombok.Getter;
+import lombok.Setter;
 import org.antlr.v4.runtime.misc.NotNull;
+
+import java.util.ArrayList;
+import java.util.List;
 
 
 @Entity
+@Setter
+@Getter
 public class Tournament extends BaseEntity {
 
     @Id
@@ -19,39 +23,7 @@ public class Tournament extends BaseEntity {
     @NotNull
     private String location;
 
-
-    public Tournament() {
-
-    }
-
-    public Tournament (String name, String location) {
-        this.name = name;
-        this.location = location;
-    }
-
-    public long getId() {
-        return id;
-    }
-
-    public void setId(int id) {
-        this.id = id;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public String getLocation() {
-        return location;
-    }
-
-    public void setLocation(String location) {
-        this.location = location;
-    }
-
+    @OneToMany(mappedBy = "tournament", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<Match> matchesTournament = new ArrayList<>();
 
 }

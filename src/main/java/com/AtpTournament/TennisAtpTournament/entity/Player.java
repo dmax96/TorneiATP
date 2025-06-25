@@ -2,14 +2,20 @@ package com.AtpTournament.TennisAtpTournament.entity;
 
 
 import jakarta.persistence.*;
+import lombok.Getter;
+import lombok.Setter;
 import org.antlr.v4.runtime.misc.NotNull;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.annotation.processing.Generated;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 @Entity
+@Setter
+@Getter
 public class Player extends BaseEntity {
 
     @Id
@@ -28,63 +34,9 @@ public class Player extends BaseEntity {
     @Column(name = "ranking_atp")
     private int rankingAtp = 400;
 
-    public Player(){
+    @OneToMany(mappedBy = "player1", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<Match> matchesAsFirst = new ArrayList<>();
 
-    }
-
-    public Player(String name, String surname, String sponsor, LocalDateTime dateOfBirth, int rankingAtp) {
-        this.name = name;
-        this.surname = surname;
-        this.sponsor = sponsor;
-        this.birthdate = dateOfBirth;
-        this.rankingAtp = rankingAtp;
-    }
-
-    public int getId() {
-        return id;
-    }
-
-    public void setId(int id) {
-        this.id = id;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public String getSurname() {
-        return surname;
-    }
-
-    public void setSurname(String surname) {
-        this.surname = surname;
-    }
-
-    public String getSponsor() {
-        return sponsor;
-    }
-
-    public void setSponsor(String sponsor) {
-        this.sponsor = sponsor;
-    }
-
-    public LocalDateTime getBirthdate() {
-        return birthdate;
-    }
-
-    public void setBirthdate(LocalDateTime birthdate) {
-        this.birthdate = birthdate;
-    }
-
-    public int getRankingAtp() {
-        return rankingAtp;
-    }
-
-    public void setRankingAtp(int rankingAtp) {
-        this.rankingAtp = rankingAtp;
-    }
+    @OneToMany(mappedBy = "player2", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<Match> matchesAsSecond = new ArrayList<>();
 }

@@ -10,9 +10,11 @@ import com.AtpTournament.TennisAtpTournament.repository.MatchRepository;
 import com.AtpTournament.TennisAtpTournament.repository.PlayerRepository;
 import com.AtpTournament.TennisAtpTournament.repository.TournamentRepository;
 import com.AtpTournament.TennisAtpTournament.request.MatchRequest;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+@Slf4j
 @Service
 public class MatchService {
 

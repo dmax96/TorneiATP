@@ -2,9 +2,11 @@ package com.AtpTournament.TennisAtpTournament.service;
 
 import com.AtpTournament.TennisAtpTournament.entity.Player;
 import com.AtpTournament.TennisAtpTournament.entityDto.PlayerDto;
+import com.AtpTournament.TennisAtpTournament.exception.PlayerNotFoundException;
 import com.AtpTournament.TennisAtpTournament.mapper.PlayerMapper;
 import com.AtpTournament.TennisAtpTournament.repository.PlayerRepository;
 import com.AtpTournament.TennisAtpTournament.request.PlayerRequest;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -12,6 +14,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
+@Slf4j
 @Service
 public class PlayerService {
 
@@ -38,8 +41,11 @@ public class PlayerService {
     }
 
     public PlayerDto GetPlayerById(Long id) {
-        Optional<Player> player = playerRepository.findById(id);
-        return playerMapper.PlayerToPlayerDto(player.get());
+        log.info("Richiesta per ottenere il giocatore con ID: {}", id);
+        Player player = playerRepository.findById(id).
+                orElseThrow(() -> new PlayerNotFoundException(id));
+        log.info("Giocatore trovato, costruzione del DTO in corso...");
+        return playerMapper.PlayerToPlayerDto(player);
     }
 
     public void DeletePlayer(Long id) {
@@ -71,6 +77,15 @@ public class PlayerService {
         playerRepository.save(player);
         return playerMapper.PlayerToPlayerDto(player);
     }
+
+    public List<PlayerDto> getPlayerRanking() {
+        List<Player> players = playerRepository.findAllByOrderByRankingAtpDesc();
+        return players.stream()
+                .map(playerMapper::PlayerToPlayerDto)
+                .toList();
+    }
+
+
 
 
 }

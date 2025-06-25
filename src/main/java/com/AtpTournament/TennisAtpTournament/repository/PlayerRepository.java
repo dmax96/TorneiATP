@@ -11,4 +11,5 @@ import java.util.Optional;
 public interface PlayerRepository extends JpaRepository<Player, Long> {
     List<Player> findAllByNameIgnoreCase(String name);
     List<Player> findAllBySponsorIgnoreCase(String sponsor);
+    List<Player> findAllByOrderByRankingAtpDesc();
 }
