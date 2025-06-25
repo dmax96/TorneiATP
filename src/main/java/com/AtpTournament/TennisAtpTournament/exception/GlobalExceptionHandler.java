@@ -15,4 +15,16 @@ public class GlobalExceptionHandler extends RuntimeException {
         log.error(e.getMessage());
     }
 
+    @ExceptionHandler(MatchNotFoundException.class)
+    public void HandleMatchNotFoundException(MatchNotFoundException e) {
+        log.error(e.getMessage());
+    }
+
+    @ExceptionHandler(TournamentNotFoundException.class)
+    public void HandleTournamentNotFoundException(TournamentNotFoundException e) {
+        log.error(e.getMessage());
+    }
+
+
+
 }
