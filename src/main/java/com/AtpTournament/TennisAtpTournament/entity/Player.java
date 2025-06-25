@@ -1,6 +1,7 @@
 package com.AtpTournament.TennisAtpTournament.entity;
 
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
@@ -35,8 +36,10 @@ public class Player extends BaseEntity {
     private int rankingAtp = 400;
 
     @OneToMany(mappedBy = "player1", cascade = CascadeType.ALL, orphanRemoval = true)
+    @JsonIgnore
     private List<Match> matchesAsFirst = new ArrayList<>();
 
     @OneToMany(mappedBy = "player2", cascade = CascadeType.ALL, orphanRemoval = true)
+    @JsonIgnore
     private List<Match> matchesAsSecond = new ArrayList<>();
 }

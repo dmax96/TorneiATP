@@ -47,7 +47,14 @@ public class MatchService {
 
     public MatchDto GetMatch(Long id) {
         Match match = matchRepository.findById(id).get();
-        return matchMapper.matchToMatchDto(match);
+
+        MatchDto matchDto = new MatchDto();
+        matchDto.setId(matchDto.getId());
+        matchDto.setPlayer1(match.getPlayer1());
+        matchDto.setPlayer2(match.getPlayer2());
+        matchDto.setMatchDate(match.getMatchDate());
+        matchDto.setTournament(match.getTournament());
+        return matchDto;
     }
 
 

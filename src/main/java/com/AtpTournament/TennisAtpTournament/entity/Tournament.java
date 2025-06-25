@@ -1,5 +1,6 @@
 package com.AtpTournament.TennisAtpTournament.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
@@ -24,6 +25,7 @@ public class Tournament extends BaseEntity {
     private String location;
 
     @OneToMany(mappedBy = "tournament", cascade = CascadeType.ALL, orphanRemoval = true)
+    @JsonIgnore
     private List<Match> matchesTournament = new ArrayList<>();
 
 }
